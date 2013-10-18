@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+
+    <script src="<%= webroot %>/js/jquery-2.0.3.min.js"></script>
+    <script src="<%= webroot %>/js/jquery.ui.widget.js"></script>
+    <script src="<%= webroot %>/js/jquery.iframe-transport.js"></script>
+    <script src="<%= webroot %>/js/jquery.fileupload.js"></script>
+    <script src="<%= webroot %>/js/bootstrap.min.js"></script>
+    <script src="<%= webroot %>/js/underscore.min.js"></script>
+    <script src="<%= webroot %>/js/mustache.js"></script>
+    <script src="<%= webroot %>/backbone/backbone-min.js"></script>
+    <script src="<%= webroot %>/js/json2.js"></script>
+    <script src="<%= webroot %>/js/store.min.js"></script>
+
+    <link rel='stylesheet' href='<%= webroot %>/css/bootstrap.min.css'/>
+    <link rel='stylesheet' href='<%= webroot %>/css/index.css'/>
+</head>
+<body>
+<header class="navbar navbar-fixed-top header-bar" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only"> - </span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="<%= webroot %>/" class="navbar-brand">~{ <%= title %> }~</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a href="<%= webroot %>/">首页</a></li>
+                <li><a href="<%= webroot %>/faq">常见问题</a></li>
+                <li><a href="<%= webroot %>/contact">联系我们</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="main-div">
+    <div class="container">
+        <div class="row well">
+            <div class="col-md-6">
+                <h1>公众<span style="color: #ff7800;">档</span>所</h1>
+                <p class="lead">上传即得提取码，然后，去打印店或者哪里打印吧！—— http://dang.kacaka.ca/</p>
+            </div>
+            <div id="main-template-container" class="col-md-6 img-rounded"></div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    &copy; 2013 XadillaX & his <a href="http://kacaka.ca" target="_blank">ZSG</a> | <a href="https://github.com/XadillaX/public-file-house" target="_blank">Project Home</a>
+</footer>
+
+<script type="text/template" id="faq-template">
+    <div id="faq-div" class="template">
+        <h2>嘛嘛，这也有问题？</h2>
+
+        <button id="go-upload" class="btn btn-warning btn-sm">去上传</button>
+        <button id="go-download" class="btn btn-warning btn-sm">去提取</button>
+    </div>
+</script>
+
+<script type="text/template" id="contact-template">
+    <div id="faq-div" class="template">
+        <h2>嘛嘛，要联系我？</h2>
+
+        <ul id="contact-list">
+            <li>邮箱：admin(at)xcoder.in</li>
+            <li>简历：<a href="http://blog.xcoder.in/curriculumvitae.html" title="Curriculum Vitae" target="_blank">http://blog.xcoder.in/curriculumvitae.html</a></li>
+            <li>Github: <a href="https://github.com/XadillaX" title="XadillaX" target="_blank">https://github.com/XadillaX</a></li>
+        </ul>
+
+        <button id="go-upload" class="btn btn-warning btn-sm">去上传</button>
+        <button id="go-download" class="btn btn-warning btn-sm">去提取</button>
+    </div>
+</script>
+
+<script type="text/template" id="get-template">
+    <div id="download-div" class="template">
+        <div class="row">
+            <div class="col-xs-4">
+                <button id="downloadpage-to-upload" class="btn btn-warning btn-block"><< 去上传</button>
+            </div>
+
+            <div class="col-xs-8">
+                <h2 id="code-h2">
+                    <<span style="color: #ff0099;">提取码</span> />
+                    <small style="float: right;">
+                        <span id="download-page-qr" data-html="true" data-placement="left" data-toggle="popover" data-original-title="提取页面二维码" data-content="blahblah..." class="glyphicon glyphicon-qrcode"></span>
+
+                        <span id="download-origin-qr" data-html="true" data-placement="left" data-toggle="popover" data-original-title="直接下载二维码" data-content="blahblah..." class="glyphicon glyphicon-qrcode"></span>
+                    </small>
+                    <span class="clear: both;"></span>
+                </h2>
+                <div class="input-group has-error input-group-lg" id="download-input-div">
+                    <input type="text" class="form-control" id="download-code" value="{{code}}" />
+                    <span class="input-group-btn" id="copy-code-btn-parent">
+                        <button class="btn btn-danger" id="download-btn" type="button">提取！</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="uploaded-template">
+    <div id="uploaded-div" class="template">
+        <div class="alert alert-success" id="uploaded-alert">
+            <b>喂食成功！</b>文件将在公众档所保留七天，下面是该文档的提取码。
+        </div>
+
+        <div class="input-group input-group-lg">
+            <div class="input-group-btn">
+                <button id="show-current" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">提取码 <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li id="show-code"><a href="#">提取码</a></li>
+                    <li id="show-link"><a href="#">链接</a></li>
+                </ul>
+            </div>
+            <input type="text" class="form-control" id="code-input" readonly value="{{code}}" />
+            <span class="input-group-btn" id="copy-code-btn-parent">
+                <button class="btn btn-info" id="copy-code-btn" type="button">复制</button>
+            </span>
+        </div>
+
+        <div class="row" id="uploaded-nav">
+            <div class="col-xs-4" style="text-align: left;"><button id="continue-upload" class="btn btn-warning btn-sm">继续上传</button></div>
+            <div class="col-xs-4" style="text-align: center;"><button id="send-to-fetion" class="btn btn-warning btn-sm">发到飞信</button></div>
+            <div class="col-xs-4" style="text-align: right;"><button id="to-download" class="btn btn-warning btn-sm">跑去提取</button></div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="upload-template">
+    <div id="upload-div" class="template">
+        <div class="row">
+            <div class="col-xs-8">
+                <input type="file" id="uploadfile" name="files[]" data-url="<%= webroot %>/upload.pfh" />
+                <button type="button" class="upbutton btn btn-danger btn-lg btn-block"><span class="glyphicon glyphicon-heart"></span> 点击上传</button>
+
+                <div class="alert alert-info" id="feed-doc">快喂一点文档给我吧，保留七天~</div>
+
+                <div class="progress progress-striped" id="progress">
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                        <span id="upload-percent">已上传 0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-4">
+                <button id="uploadpage-to-download" class="btn btn-warning btn-block">去提取 >></button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<div class="modal fade" id="send-to-fetion-modal" tabindex="-1" role="dialog" aria-labelledby="Send to Fetion" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">发送提取码到飞信</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="send-form">
+                    <div class="form-group">
+                        <label for="phonenumber">手机号</label>
+                        <input type="mobile" class="form-control" id="phonenumber" placeholder="输入你的手机号（必须开通飞信）">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">飞信密码</label>
+                        <input type="password" class="form-control" id="password" placeholder="输入你的飞信密码">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="cancel-sending" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="sending" data-loading-text="<img style='width: 16px; height: 16px; ' src='<%= webroot %>/images/loading.gif' /> 发送中...">发送</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="<%= webroot %>/js/jquery.zclip.min.js"></script>
+<script src="<%= webroot %>/backbone/router/workspace.js"></script>
+<script src="<%= webroot %>/backbone/view/uploadView.js"></script>
+<script src="<%= webroot %>/backbone/view/uploadedView.js"></script>
+<script src="<%= webroot %>/backbone/view/getView.js"></script>
+<script src="<%= webroot %>/backbone/view/faqView.js"></script>
+<script src="<%= webroot %>/backbone/view/contactView.js"></script>
+<script src="<%= webroot %>/js/index.js"></script>
+</body>
+</html>

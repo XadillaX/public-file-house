@@ -1,0 +1,150 @@
+@font-face {
+    font-family: 'Neuton';
+    font-style: normal;
+    font-weight: 800;
+    src: local('Neuton Extrabold'), local('Neuton-ExtraBold'), url("../SLchCroJwYIfYhi7deprmLO3LdcAZYWl9Si6vvxL-qU.woff") format('woff');
+}
+
+
+body {
+    background: url("../images/background.png") repeat;
+}
+
+.header-bar {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .15);
+
+    background-color: rgba(254, 199, 80, 1.0);
+    border-color: rgba(240, 170, 50, 1.0);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .1);
+}
+
+a {
+    color: #ffffff;
+}
+
+a:hover {
+    color: rgba(255, 232, 186, 1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-nav li a {
+    padding-top: 17px;
+}
+
+.navbar-nav li a:hover {
+    background: rgba(255, 232, 186, 1);
+    color: rgba(240, 170, 50, 1.0);
+}
+
+.main-div {
+    padding-top: 140px;
+}
+
+.main-div h1 {
+    font-size: 100px;
+
+}
+
+.main-div .lead {
+
+}
+
+#uploadfile, #progress {
+    display: none;
+}
+
+.progress-bar {
+    padding-top: 2px;
+}
+
+.well {
+    opacity: 0.9;
+}
+
+#main-template-container {
+    border: 3px dotted #ff7800;
+    height: 200px;
+    background: #fff;
+}
+
+#upload-div {
+
+    text-align: center;
+}
+
+#code-h2 {
+    margin-top: 45px;
+    color: #ccc;
+}
+
+#code-h2 small {
+    margin-top: 10px;
+}
+
+#code-h2 small span {
+    cursor: pointer;
+}
+
+#upload-div .upbutton {
+    margin-top: 45px;
+}
+
+#uploadpage-to-download, #downloadpage-to-upload {
+    margin-top: 45px;
+    height: 107px;
+}
+
+#upload-div .progress {
+    margin-top: 20px;
+}
+
+#feed-doc {
+    margin-top: 10px;
+}
+
+#uploaded-alert {
+    margin-top: 20px;
+}
+
+#uploaded-div input {
+    letter-spacing: 5px;
+    font-family: Neuton;
+}
+
+#copy-code-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#uploaded-nav {
+    margin-top: 10px;
+}
+
+.template {
+    display: none;
+}
+
+#download-code {
+    color: #ff7800;
+    font-family: "Neuton";
+    letter-spacing: 5px;
+}
+
+#download-input-div {
+    margin-top: 29px;
+}
+
+footer {
+    text-align: center;
+}
+
+footer a, #contact-list a {
+    color: #ff7800;
+}
+
+footer a:hover, #contact-list a:hover {
+    color: #ff0099;
+}

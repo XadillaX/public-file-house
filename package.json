@@ -1,0 +1,20 @@
+{
+  "name": "public-file-house",
+  "version": "0.0.1",
+  "description": "公众档所。",
+  "main": "pfh.js",
+  "dependencies": {
+    "redis": "~0.8.6",
+    "urlencode": "~0.0.1",
+    "ejs": "~0.8.4",
+    "express": "~3.4.0",
+    "validator": "~1.5.1",
+    "fetion-sender": "~0.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "XadillaX",
+  "license": "BSD-2-Clause"
+}
