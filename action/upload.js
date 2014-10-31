@@ -1,7 +1,7 @@
 /**
  * Created by XadillaX on 13-10-17.
  */
-var alphaRandomer = require("alphaRandomer");
+var alphaRandomer = require("../lib/alphaRandomer");
 var config = require("../commonConst");
 var FileModel = require("../model/fileModel");
 var fs = require("fs");

@@ -23,7 +23,7 @@ exports.verifyBlahblah = function(blahblah) {
     var time = array[array.length - 1];
     array.pop();
 
-    var encoder = require("smpEncoder");
+    var encoder = require("../lib/smpEncoder");
 
     try {
         var text = encoder.norBack(array, time.toString());
