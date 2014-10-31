@@ -71,7 +71,7 @@ exports.download = function(req, resp) {
 };
 
 exports.getToken = function(req, resp) {
-    var encoder = require("smpEncoder");
+    var encoder = require("../lib/smpEncoder");
     var token = baseConfig.token;
     var now = parseInt(Date.now() / 1000);
     var result = encoder.encode(now + token);
