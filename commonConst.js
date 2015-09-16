@@ -11,6 +11,7 @@ module.exports = {
 
     "redis"     : {
         "host"  : "10.9.21.212",
-        "port"  : "5456"
+        "port"  : "5456",
+        "password": "8b9dc205-1b13-44b4-acf7-c4a9c5e4637c"
     }
 };

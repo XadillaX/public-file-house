@@ -3,50 +3,36 @@
  */
 var redis = require("redis");
 var config = require("../commonConst");
+var client = redis.createClient(config.redis.port, config.redis.host, {
+    auth_pass: config.redis.password
+});
+client.on("error", function(err) {
+    console.error(err);
+});
 
 /**
  * The initialize function
  * @param host
  * @param port
  */
-function fileModel(host, port) {
-    this.host = host;
-    this.port = port;
+function FileModel() {
+}
 
-    if(undefined === port || null === port) this.port = config.redis.port;
-    if(undefined === host || null === host) this.host = config.redis.host;
-};
-
-module.exports = fileModel;
+module.exports = FileModel;
 
 /**
  * If a key is existing.
  * @param key
  * @param callback(status, result)
  */
-fileModel.prototype.keyExists = function(key, callback) {
-    var client = redis.createClient(this.port, this.host);
-    client.on("error", function(error) {
-        callback(false, error);
-
-        client.end();
-    });
-
+FileModel.prototype.keyExists = function(key, callback) {
     client.send_command("EXISTS", [ key ], function(err, result) {
         if(err === null) callback(true, result);
         else callback(false, err);
-
-        client.end();
     });
 };
 
-fileModel.prototype.get = function(key, callback) {
-    var client = redis.createClient(this.port, this.host);
-    client.on("error", function(error) {
-        callback(false, error);
-        client.end();
-    });
-
+FileModel.prototype.get = function(key, callback) {
     client.hgetall(key, function(error, obj) {
         if(error) callback(false, error, null);
         else {
@@ -57,8 +43,6 @@ fileModel.prototype.get = function(key, callback) {
                 callback(true, null, obj);
             }
         }
-
-        client.end();
     });
 };
 
@@ -68,13 +52,7 @@ fileModel.prototype.get = function(key, callback) {
  * @param origFilename
  * @param callback
  */
-fileModel.prototype.addFile = function(filename, origFilename, contenttype, callback) {
-    var client = redis.createClient(this.port, this.host);
-    client.on("error", function(error) {
-        callback(false, error);
-        client.end();
-    });
-
+FileModel.prototype.addFile = function(filename, origFilename, contenttype, callback) {
     var obj = {
         "time"      : parseInt(Date.now() / 1000),
         "filename"  : origFilename,
