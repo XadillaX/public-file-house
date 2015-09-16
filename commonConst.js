@@ -10,7 +10,7 @@ module.exports = {
     "token"     : "kacaka.ca",
 
     "redis"     : {
-        "host"  : "127.0.0.1",
-        "port"  : "6379"
+        "host"  : "10.9.21.212",
+        "port"  : "5456"
     }
 };
