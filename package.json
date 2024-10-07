@@ -7,7 +7,7 @@
     "redis": "~0.8.6",
     "urlencode": "~0.0.1",
     "ejs": "~0.8.4",
-    "express": "~3.4.0",
+    "express": "~4.0.0",
     "validator": "~1.5.1",
     "fetion-sender": "~0.0.4"
   },
